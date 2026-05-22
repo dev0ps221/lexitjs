@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 
-expression = "2 + 4 = 5"
+expression = "2 + 4"
 tests = {
     number:/[0-9]/,
     identifier:/[a-z]/i,
@@ -49,6 +49,7 @@ operators = {
 keywords = [
     "say",
     "get",
+    "set",
     "func",
     "end",
     "let",
@@ -190,6 +191,8 @@ function lexit(expression)
     }
     console.info(values)
 }
-// lexit(expression)
+lexit(expression)
 expression = '"salut comment tu vas"'
+lexit(expression)
+expression = 'set var_1 = "salut"'
 lexit(expression)
