@@ -1,0 +1,25 @@
+{
+  "name": "lexitjs",
+  "version": "1.0.0",
+  "description": "The Practical Lexer",
+  "main": "lexit.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev0ps221/lexitjs.git"
+  },
+  "keywords": [
+    "lexer",
+    "programming",
+    "language",
+    "interpreter"
+  ],
+  "author": "El Hadji Seybatou Mbengue (Tek-Tech)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dev0ps221/lexitjs/issues"
+  },
+  "homepage": "https://github.com/dev0ps221/lexitjs#readme"
+}
