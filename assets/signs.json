@@ -1,0 +1,12 @@
+{
+    ":" : "SEMICOLON",
+    ";" : "SEMICOLON",
+    "\"" : "DOUBLEQUOTE",
+    "'" : "QUOTE",
+    "_" : "UNDERLINE",
+    "-" : "HYPHEN",
+    "{" : "LPAREN",
+    "}" : "RPAREN",
+    "[" : "LSPAREN",
+    "]" : "RSPAREN"
+}

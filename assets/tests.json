@@ -1,0 +1,7 @@
+{
+    "number":"/[0-9]/",
+    "identifier_start":"/[a-z_]/i",
+    "identifier":"/[a-z0-9_]/i",
+    "space":"/ /",
+    "newline":"/\\n/"
+}

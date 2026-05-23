@@ -1,0 +1,12 @@
+{
+    "!"   : "NOT",
+    "+"   : "PLUS",
+    "-"   : "MINUS",
+    "*"   : "MULT",
+    "/"   : "DIV",
+    "=="  : "SAME",
+    "===" : "SURELYSAME",
+    "!="  : "DIFF",
+    "!==" : "SURELYDIFF",
+    "="   : "IS"
+}
