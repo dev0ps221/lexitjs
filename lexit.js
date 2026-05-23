@@ -4,8 +4,10 @@
 expression = "2 + 4"
 tests = {
     number:/[0-9]/,
-    identifier:/[a-z]/i,
-    space:/ /
+    identifier_start:/[a-z_]/i,
+    identifier:/[a-z0-9_]/i,
+    space:/ /,
+    newline:/\n/,
 }
 blocks = [
     {
@@ -26,17 +28,34 @@ blocks = [
         delimiters:[
             {
                 start:"func",
-                end:"end"
+                end:"end",
+                params_delimiter:',',
+                params_start:'[',
+                params_end:']',
             }
         ]
     }
 ]
 signs = {
+    ":" : "SEMICOLON",
+    ";" : "SEMICOLON",
     "\"" : "DOUBLEQUOTE",
     "\'" : "QUOTE",
+    "_" : "UNDERLINE",
+    "-" : "HYPHEN",
+    "{" : "LPAREN",
+    "}" : "RPAREN",
+    "[" : "LSPAREN",
+    "]" : "RSPAREN",
+}
+operator_ref = {
+    "unary"    : ["!"],
+    "binary"   : ["+","-","*","/","==","===","!=","!==","??","!?"],
+    "tertiary" : ["?"],
 }
 operators = {
-    "+"  : "PLUS",
+    "!"   : "NOT",
+    "+"   : "PLUS",
     "-"   : "MINUS",
     "*"   : "MULT",
     "/"   : "DIV",
@@ -79,6 +98,10 @@ function lexit(expression)
             values.push(['space',value])
             continue
         }
+        if(tests.newline.test(char)){
+            values.push(['newline',value])
+            continue
+        }
         if(tests.number.test(char))
         {
             char = chars[cursor]
@@ -91,101 +114,102 @@ function lexit(expression)
             values.push(['number',value])
             continue
         }
-        if(tests.identifier.test(char))
+        // if(tests.identifier.test(char))
+        // {
+        //     char = chars[cursor]
+        //     while(tests.identifier.test(char))
+        //     {
+        //         value+=char
+        //         cursor++
+        //         char = chars[cursor]
+        //     }
+        //     values.push(['identifier',value])
+        //     continue
+        // }
+        if(tests.identifier_start.test(char))
         {
             char = chars[cursor]
+
             while(tests.identifier.test(char))
             {
-                value+=char
+                value += char
                 cursor++
                 char = chars[cursor]
             }
-            values.push(['identifier',value])
+            values.push(['identifier', value])
             continue
         }
-        if(operators.hasOwnProperty(char))
-        {
-            values.push([operators[char],value])
-            continue
-        }
-        // if(signs.hasOwnProperty(char))
+        // if(operators.hasOwnProperty(char))
         // {
-        //     values.push([signs[char],value])
-        //     let block_index = 0
-        //     let block_size = blocks.length
-        //     let block = null
-        //     let delimiter = null
-        //     while(block_index < block_size)
-        //     {
-        //         let delimiters_index = 0
-        //         let delimiters_size = blocks[block_index].delimiters.length
-        //         console.info(delimiters_index < delimiters_size)
-        //         while(delimiters_index < delimiters_size)
-        //         {
-        //             if(blocks[block_index].delimiters[delimiters_index].start.match(char))
-        //             {
-        //                 block = blocks[block_index]
-        //                 value = ""
-        //                 cursor++
-        //                 char = chars[cursor]
-        //                 while(char != blocks[block_index].delimiters[delimiters_index].end.match(char))
-        //                 {
-        //                     value+= char
-        //                     cursor++
-        //                     char = chars[cursor]
-        //                 }
-        //                 values.push([block.type,value])
-        //                 break
-        //             }
-        //             delimiters_index++    
-        //             if(block)
-        //             {
-        //                 break
-        //             }
-        //         }
-        //         block_index++
-        //         if(block)
-        //         {
-        //             break
-        //         }
-        //     }
+        //     values.push([operators[char],value])
         //     continue
         // }
+        let three = chars.slice(cursor-1, cursor+2).join("")
+        let two   = chars.slice(cursor-1, cursor+1).join("")
+        let one   = char
 
-        if (signs.hasOwnProperty(char)) {
-            values.push([signs[char], char])
+        if(operators[three])
+        {
+            values.push([operators[three], three])
+            cursor += 2
+            continue
+        }
 
+        if(operators[two])
+        {
+            values.push([operators[two], two])
+            cursor += 1
+            continue
+        }
+
+        if(operators[one])
+        {
+            values.push([operators[one], one])
+            continue
+        }
+        if(signs.hasOwnProperty(char))
+        {
+            values.push([signs[char],value])
+            let block_index = 0
+            let block_size = blocks.length
+            let block = null
             let delimiter = null
-
-            for (let b = 0; b < blocks.length; b++) {
-                for (let d = 0; d < blocks[b].delimiters.length; d++) {
-                    if (blocks[b].delimiters[d].start === char) {
-                        delimiter = blocks[b].delimiters[d]
+            while(block_index < block_size)
+            {
+                let delimiters_index = 0
+                let delimiters_size = blocks[block_index].delimiters.length
+                while(delimiters_index < delimiters_size)
+                {
+                    // console.info(blocks[block_index].delimiters,char)
+                    if(blocks[block_index].delimiters[delimiters_index].start==char)
+                    {
+                        block = blocks[block_index]
+                        value = ""
+                        char = chars[cursor]
+                        while(char && (char != blocks[block_index].delimiters[delimiters_index].end))
+                        {
+                            value+= char
+                            cursor++
+                            char = chars[cursor]
+                        }
+                        values.push([block.type,value])
+                        values.push([signs[char],char])
+                        cursor++
+                        break
+                    }
+                    delimiters_index++    
+                    if(block)
+                    {
                         break
                     }
                 }
-                if (delimiter) break
-            }
-
-            if (delimiter) {
-                let value = ""
-                char = chars[cursor]
-
-                while (cursor < chunk_size && char !== delimiter.end) {
-                    value += char
-                    cursor++
-                    char = chars[cursor]
+                block_index++
+                if(block)
+                {
+                    break
                 }
-
-                values.push(["STRING", value])
-
-                if (char === delimiter.end) {
-                    values.push([signs[char], char])
-                    cursor++
-                }
-
-                continue
             }
+            continue
         }
         tokens_count++
     }
@@ -195,4 +219,12 @@ lexit(expression)
 expression = '"salut comment tu vas"'
 lexit(expression)
 expression = 'set var_1 = "salut"'
+lexit(expression)
+expression = 'set condition = "salut" !== "ca va"'
+lexit(expression)
+expression = `
+    func say_hello[name]
+        say "helo {{name}}";
+    end
+`
 lexit(expression)
