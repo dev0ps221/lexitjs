@@ -20,15 +20,15 @@ class LexIt{
             let char = chars[cursor]
             let value  = char 
             cursor++
-            if(tests.space.test(char)){
+            if(char && tests.space.test(char)){
                 values.push(['space',value])
                 continue
             }
-            if(tests.newline.test(char)){
+            if(char && tests.newline.test(char)){
                 values.push(['newline',value])
                 continue
             }
-            if(tests.number.test(char))
+            if(char && tests.number.test(char))
             {
                 char = chars[cursor]
                 while(tests.number.test(char))
@@ -40,7 +40,7 @@ class LexIt{
                 values.push(['number',value])
                 continue
             }
-            if(tests.identifier_start.test(char))
+            if(char && tests.identifier_start.test(char))
             {
                 char = chars[cursor]
 
