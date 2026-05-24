@@ -16,5 +16,5 @@ const tokenize = lexer.tokenize
 //     end
 // `
 // tokenize(expression)
-expression = 'let var_a'
-tokenize(expression)
+expression = 'let var_a = "hello world" '
+console.info(tokenize(expression))
