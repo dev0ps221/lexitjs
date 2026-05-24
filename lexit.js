@@ -170,7 +170,7 @@ class LexIt{
             // }
             tokens_count++
         }
-        console.info(values)
+        return values
     }
 }
 module.exports = {LexIt,utils,helpers}

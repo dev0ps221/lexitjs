@@ -1,8 +1,8 @@
 const fs            = require('fs')
 const os            = require('os')
-const current_path  = (sub=null)=>'.'+(sub?(sub.startsWith('/') ? "" : "/")+sub:"")
+const current_path  = (sub=null)=>__dirname+(sub?(sub.startsWith('/') ? "" : "/")+sub:"")
 const read_json     = (filepath)=>JSON.parse(fs.readFileSync(filepath))
-const assets_path   = (sub=null)=>current_path('assets')+(sub?"/"+sub:"")
+const assets_path   = (sub=null)=>current_path('assets')+(sub?(sub.startsWith('/') ? "" : "/")+sub:"")
 
 
 const get_helpers       = ()=>({
