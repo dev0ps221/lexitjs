@@ -14,22 +14,11 @@ const get_helpers       = ()=>({
     tests           : read_json(assets_path('tests.json'))
 })
 const helpers = get_helpers()
-const toRegex       = (str) => 
-{
-    const match = str.match(/^\/(.*)\/([a-z]*)$/i);
-    if (!match) throw new Error("Invalid regex format: " + str);
-    return new RegExp(match[1], match[2]);
-};
-
-for (const key in helpers.tests) {
-    helpers.tests[key] = toRegex(helpers.tests[key]);
-}
 module.exports = {
     current_path,
     read_json,
     assets_path,
     os,
     fs,
-    toRegex,
     helpers
 }
