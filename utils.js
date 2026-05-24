@@ -1,6 +1,6 @@
 const fs            = require('fs')
 const os            = require('os')
-const current_path  = (sub=null)=>process.cwd()+(sub?"/"+sub:"")
+const current_path  = (sub=null)=>__dirname+(sub?"/"+sub:"")
 const read_json     = (filepath)=>JSON.parse(fs.readFileSync(filepath))
 const assets_path   = (sub=null)=>current_path('assets')+(sub?"/"+sub:"")
 
