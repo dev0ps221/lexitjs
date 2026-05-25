@@ -79,7 +79,6 @@ class LexIt{
             if(operators[one])
             {
                 values.push([operators[one], one])
-                console.info(operators[one],one)
                 continue
             }
             if(signs.hasOwnProperty(char))
