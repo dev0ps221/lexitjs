@@ -1,12 +1,16 @@
 {
-    "!"   : "NOT",
-    "+"   : "PLUS",
-    "-"   : "MINUS",
-    "*"   : "MULT",
-    "/"   : "DIV",
-    "=="  : "SAME",
-    "===" : "SURELYSAME",
-    "!="  : "DIFF",
-    "!==" : "SURELYDIFF",
-    "="   : "IS"
+    "!"     : "NOT",
+    "+"     : "PLUS",
+    "-"     : "MINUS",
+    "*"     : "MULT",
+    "/"     : "DIV",
+    "=="    : "SAME",
+    "==="   : "SURELYSAME",
+    "!="    : "DIFF",
+    "!=="   : "SURELYDIFF",
+    "="     : "IS",
+    "<="    : "LESSTHAN",
+    "<=="   : "SURELYLESSTHAN",
+    ">="    : "MORETHAN",
+    ">=="   : "SURELYMORETHAN"
 }
