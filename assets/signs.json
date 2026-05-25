@@ -5,8 +5,10 @@
     "'" : "QUOTE",
     "_" : "UNDERLINE",
     "-" : "HYPHEN",
-    "{" : "LPAREN",
-    "}" : "RPAREN",
+    "(" : "LPAREN",
+    ")" : "RPAREN",
+    "{" : "LBRACK",
+    "}" : "RBRACK",
     "[" : "LSPAREN",
     "]" : "RSPAREN"
 }
